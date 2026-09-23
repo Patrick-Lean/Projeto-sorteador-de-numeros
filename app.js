@@ -4,6 +4,9 @@ function sortear() {
     let limiteInferiorDeNumeros = parseInt(document.getElementById('de').value);
     let limiteSuperiorDeNumeros = parseInt(document.getElementById('ate').value);
     let listaDeNumerosSorteados = [];
+    let quantidadeDeNumerosDisponiveis = (limiteSuperiorDeNumeros - limiteInferiorDeNumeros) + 1;
+
+
 
     if (document.getElementById('quantidade').value == '' || document.getElementById('de').value == '' || document.getElementById('ate').value == '') {
         alert('Há campos sem informação. Digite corretamente os dados!');
@@ -11,20 +14,24 @@ function sortear() {
         if (limiteInferiorDeNumeros > limiteSuperiorDeNumeros) {
             alert('O limite inferior é maior do que o limite superior. Digite corretamente os dados!');
         } else {
-            for (let i = 0; i < quantidadeDeNumerosSorteados; i++) {
-                let numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros, limiteSuperiorDeNumeros);
+            if (quantidadeDeNumerosSorteados > quantidadeDeNumerosDisponiveis) {
+                alert('Não há numeros suficientes para relizar o sorteio.');
+            } else {
+                for (let i = 0; i < quantidadeDeNumerosSorteados; i++) {
+                    let numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros, limiteSuperiorDeNumeros);
 
-                while (listaDeNumerosSorteados.includes(numeroSorteado)) {
-                    numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros, limiteSuperiorDeNumeros);
+                    while (listaDeNumerosSorteados.includes(numeroSorteado)) {
+                        numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros, limiteSuperiorDeNumeros);
+                    }
+
+                    listaDeNumerosSorteados.push(numeroSorteado);
                 }
 
-                listaDeNumerosSorteados.push(numeroSorteado);
+                let resultado = document.getElementById('resultado');
+                resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${listaDeNumerosSorteados} </label>`;
+                alterarStatusBotaoSortear();
+                alterarStatusBotaoReiniciar();
             }
-
-            let resultado = document.getElementById('resultado');
-            resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${listaDeNumerosSorteados} </label>`;
-            alterarStatusBotaoSortear();
-            alterarStatusBotaoReiniciar();
         }
     }
 
