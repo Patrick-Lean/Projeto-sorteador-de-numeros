@@ -1,33 +1,42 @@
 
-function sortear(){
+function sortear() {
     let quantidadeDeNumerosSorteados = parseInt(document.getElementById('quantidade').value);
     let limiteInferiorDeNumeros = parseInt(document.getElementById('de').value);
     let limiteSuperiorDeNumeros = parseInt(document.getElementById('ate').value);
     let listaDeNumerosSorteados = [];
 
-    for (let i = 0; i < quantidadeDeNumerosSorteados; i++){
-        let numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros,limiteSuperiorDeNumeros);
+    if (document.getElementById('quantidade').value == '' || document.getElementById('de').value == '' || document.getElementById('ate').value == '') {
+        alert('Há campos sem informação. Digite corretamente os dados!');
+    } else {
+        if (limiteInferiorDeNumeros > limiteSuperiorDeNumeros) {
+            alert('O limite inferior é maior do que o limite superior. Digite corretamente os dados!');
+        } else {
+            for (let i = 0; i < quantidadeDeNumerosSorteados; i++) {
+                let numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros, limiteSuperiorDeNumeros);
 
-        while(listaDeNumerosSorteados.includes(numeroSorteado)){
-            numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros,limiteSuperiorDeNumeros);
+                while (listaDeNumerosSorteados.includes(numeroSorteado)) {
+                    numeroSorteado = gerarNumeroAleatorio(limiteInferiorDeNumeros, limiteSuperiorDeNumeros);
+                }
+
+                listaDeNumerosSorteados.push(numeroSorteado);
+            }
+
+            let resultado = document.getElementById('resultado');
+            resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${listaDeNumerosSorteados} </label>`;
+            alterarStatusBotaoSortear();
+            alterarStatusBotaoReiniciar();
         }
-
-        listaDeNumerosSorteados.push(numeroSorteado);
     }
 
-   let resultado = document.getElementById('resultado');
-   resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${listaDeNumerosSorteados} </label>`;
-   alterarStatusBotaoSortear();
-   alterarStatusBotaoReiniciar();
 }
 
-function gerarNumeroAleatorio(min,max){
+function gerarNumeroAleatorio(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function reiniciar(){
+function reiniciar() {
     document.getElementById('quantidade').value = '';
     document.getElementById('de').value = '';
     document.getElementById('ate').value = '';
@@ -37,23 +46,23 @@ function reiniciar(){
     alterarStatusBotaoSortear();
 }
 
-function alterarStatusBotaoReiniciar(){
+function alterarStatusBotaoReiniciar() {
     let botao = document.getElementById('btn-reiniciar');
-    if(botao.classList.contains('container__botao-desabilitado')){
+    if (botao.classList.contains('container__botao-desabilitado')) {
         botao.classList.remove('container__botao-desabilitado');
         botao.classList.add('container__botao');
-    }else{
+    } else {
         botao.classList.remove('container__botao');
         botao.classList.add('container__botao-desabilitado');
     }
 }
 
-function alterarStatusBotaoSortear(){
+function alterarStatusBotaoSortear() {
     let botao = document.getElementById('btn-sortear');
-    if(botao.classList.contains('container__botao-desabilitado')){
+    if (botao.classList.contains('container__botao-desabilitado')) {
         botao.classList.remove('container__botao-desabilitado');
         botao.classList.add('container__botao');
-    }else{
+    } else {
         botao.classList.remove('container__botao');
         botao.classList.add('container__botao-desabilitado');
     }
